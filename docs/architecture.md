@@ -204,30 +204,30 @@ an AWS account.
 
 ## Backlog
 
-Issue #1 is this document. The rows below are the follow-ups it produces, numbered by build order — not
-by issue number, since they land as #2 onward. **Needs** refers to these step numbers.
+Issue #1 is this document. These are the follow-ups it produced. **Needs** is the work that must land first.
 
-| Step | Ticket | Needs |
+| Issue | Ticket | Needs |
 | --- | --- | --- |
-| 1 | Flyway baseline: `links`, indexes, `link_id_seq` | — |
-| 2 | `Link` entity, repository, integration test | 1 |
-| 3 | Base62 codec + Feistel + tests | — |
-| 4 | ID block allocator | 1, 3 |
-| 5 | `POST /api/v1/links` | 2, 4 |
-| 6 | `GET /{code}` — Postgres only | 2 |
-| 7 | Redis cache-aside + negative cache | 5, 6 |
-| 8 | Click counting: `INCR` + flush job | 7 |
-| 9 | Traefik rate-limit middleware | — |
-| 10 | App rate limiting + 404 throttle | 7 |
-| 11 | Metrics + Grafana dashboard | 7, 8 |
-| 12 | Expiry sweep job | 2 |
-| 13 | `GET /api/v1/links/{code}` | 5 |
-| 14 | Jib image + GitHub Actions CI | 2 |
-| 15 | k3s manifests: Deployment, Service, Ingress, TLS, probes, HPA | 14 |
-| 16 | Terraform `host/` | 15 |
-| 17 | Floci in compose | — |
-| 18 | Terraform `aws/`, applied against Floci | 17 |
-| 19 | Secrets Manager for DB password + Feistel key | 18 |
-| 20 | `pg_dump` → S3 backup job | 18 |
+| [#3](../../issues/3) | Flyway baseline: `links`, indexes, `link_id_seq` | — |
+| [#4](../../issues/4) | `Link` entity, repository, integration test | #3 |
+| [#5](../../issues/5) | Base62 codec + Feistel + tests | — |
+| [#6](../../issues/6) | ID block allocator | #3, #5 |
+| [#7](../../issues/7) | `POST /api/v1/links` | #4, #6 |
+| [#8](../../issues/8) | `GET /{code}` — Postgres only | #4 |
+| [#9](../../issues/9) | Redis cache-aside + negative cache | #7, #8 |
+| [#10](../../issues/10) | Click counting: `INCR` + flush job | #9 |
+| [#11](../../issues/11) | Traefik rate-limit middleware | — |
+| [#12](../../issues/12) | App rate limiting + 404 throttle | #9 |
+| [#13](../../issues/13) | Metrics + Grafana dashboard | #9, #10 |
+| [#14](../../issues/14) | Expiry sweep job | #4 |
+| [#15](../../issues/15) | `GET /api/v1/links/{code}` | #7 |
+| [#16](../../issues/16) | Jib image + GitHub Actions CI | #4 |
+| [#17](../../issues/17) | k3s manifests: Deployment, Service, Ingress, TLS, probes, HPA | #16 |
+| [#18](../../issues/18) | Terraform `host/` | #17 |
+| [#19](../../issues/19) | Floci in compose | — |
+| [#20](../../issues/20) | Terraform `aws/`, applied against Floci | #19 |
+| [#21](../../issues/21) | Secrets Manager for DB password + Feistel key | #20 |
+| [#22](../../issues/22) | `pg_dump` → S3 backup job | #20 |
 
-1–8 give a working shortener · 9–13 harden it · 14–16 deploy it · 17–20 add the AWS layer, independently.
+#3–#10 give a working shortener · #11–#15 harden it · #16–#18 deploy it · #19–#22 add the AWS layer,
+independently. Start with #3 and #5 in parallel: #5 is self-contained logic, #3 unblocks everything else.
