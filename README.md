@@ -1,8 +1,27 @@
 # shortbiv
 
-A URL shortener built for read-heavy traffic: ~23 redirects/sec sustained, sub-50ms p99 on cache hit,
-and a durable record of every link.
+### About this project
+shortbiv is an exercise in building a system end to end, not a service with users. The
+goal is working familiarity with system design and the delivery chain around it: Spring
+Boot, PostgreSQL and Redis on the application side; Kubernetes, Terraform, GitHub Actions
+and AWS services on the infrastructure side.
 
+It is designed against a concrete load — 2 million redirects a day, roughly 100 reads per
+write — not because that traffic exists, but because designing against it forces real
+problems into the open instead of letting them be hand-waved:
+
+- **Issuing ids across replicas.** Three pods creating links cannot use `MAX(id) + 1`;
+  two read the same value in the same millisecond and one insert fails. Solved with a
+  Postgres sequence that hands each pod a block of 1,000 ids to serve from memory.
+- **Guessable short codes.** A plain counter produces `1000001`, `1000002`, and anyone
+  can walk the keyspace and read every link in the database. Solved with a keyed Feistel
+  permutation applied before base62 encoding.
+- **Cache failure.** Redis absorbs most reads, so treating it as authoritative would turn
+  a cache outage into a total outage. It is deliberately non-authoritative: cache errors
+  are counted as misses.
+
+Every decision, including the rejected alternatives and what each one costs, is recorded
+in [docs/architecture.md](docs/architecture.md).
 **Status:** architecture settled, implementation not started. The app starts, Postgres and Redis are
 wired for tests, and there is no domain code yet.
 
