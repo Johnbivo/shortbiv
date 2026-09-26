@@ -1,3 +1,9 @@
 spring:
   application:
     name: shortbiv
+
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+
