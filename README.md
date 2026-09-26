@@ -22,8 +22,6 @@ problems into the open instead of letting them be hand-waved:
 
 Every decision, including the rejected alternatives and what each one costs, is recorded
 in [docs/architecture.md](docs/architecture.md).
-**Status:** architecture settled, implementation not started. The app starts, Postgres and Redis are
-wired for tests, and there is no domain code yet.
 
 ## Architecture
 
