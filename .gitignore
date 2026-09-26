@@ -1,0 +1,38 @@
+### IDE ###
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### Java / Maven ###
+target/
+!.mvn/wrapper/maven-wrapper.properties
+
+### Node / Angular (phase 8) ###
+node_modules/
+dist/
+.angular/
+
+### Secrets & local env ###
+.env
+.env.*
+!.env.example
+
+### Terraform (phase 7) ###
+# Provider binaries - large, re-downloadable
+.terraform/
+# State contains secrets in PLAINTEXT. Never commit.
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+# Variable files often hold credentials
+*.tfvars
+*.tfvars.json
+!example.tfvars
+# NOTE: .terraform.lock.hcl is deliberately NOT ignored - it must be committed.
